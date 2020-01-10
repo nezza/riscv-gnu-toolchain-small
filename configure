@@ -585,13 +585,10 @@ PACKAGE_URL=''
 ac_subst_vars='LTLIBOBJS
 LIBOBJS
 with_linux_headers_src
-with_gdb_src
 with_musl_src
-with_glibc_src
 with_newlib_src
 with_binutils_src
 with_gcc_src
-enable_gdb
 with_guile
 with_system_zlib
 configure_host
@@ -600,7 +597,6 @@ target_cflags
 cmodel
 gcc_checking
 newlib_multilib_names
-glibc_multilib_names
 multilib_flags
 WITH_TUNE
 WITH_ABI
@@ -677,13 +673,10 @@ with_target_cxxflags
 with_host
 with_system_zlib
 with_guile
-enable_gdb
 with_gcc_src
 with_binutils_src
 with_newlib_src
-with_glibc_src
 with_musl_src
-with_gdb_src
 with_linux_headers_src
 '
       ac_precious_vars='build_alias
@@ -1321,12 +1314,11 @@ Optional Features:
   --enable-gcc-checking   Enable gcc internal checking, it will make gcc very
                           slow, only enable it when developing gcc
                           [--disable-gcc-checking]
-  --disable-gdb           Don't build GDB, as it's not upstream
 
 Optional Packages:
   --with-PACKAGE[=ARG]    use PACKAGE [ARG=yes]
   --without-PACKAGE       do not use PACKAGE (same as --with-PACKAGE=no)
-  --with-arch=rv64imafdc  Sets the base RISC-V ISA, defaults to rv64imafdc
+  --with-arch=rv32i       Sets the base RISC-V ISA, defaults to rv32i
   --with-abi=lp64d        Sets the base RISC-V ABI, defaults to lp64d
   --with-tune=rocket      Set the base RISC-V CPU, defaults to rocket
   --with-cmodel           Select the code model to use when building libc and
@@ -1343,9 +1335,7 @@ Optional Packages:
                           default
   --with-newlib-src       Set newlib source path, use builtin source by
                           default
-  --with-glibc-src        Set glibc source path, use builtin source by default
   --with-musl-src         Set musl source path, use builtin source by default
-  --with-gdb-src          Set gdb source path, use builtin source by default
   --with-linux-headers-src
                           Set linux-headers source path, use builtin source by
                           default
@@ -3267,7 +3257,7 @@ fi
 if test "${with_arch+set}" = set; then :
   withval=$with_arch;
 else
-  with_arch=rv64imafdc
+  with_arch=rv32i
 
 fi
 
@@ -3335,14 +3325,6 @@ if test "x$enable_multilib" != xno; then :
 
 else
   multilib_flags=--disable-multilib
-
-fi
-
-if test "x$enable_multilib" != xno; then :
-  glibc_multilib_names="rv32imac-ilp32 rv32imafdc-ilp32d rv64imac-lp64 rv64imafdc-lp64d"
-
-else
-  glibc_multilib_names="$with_arch-$with_abi"
 
 fi
 
@@ -3459,23 +3441,6 @@ else
 
 fi
 
-# Check whether --enable-gdb was given.
-if test "${enable_gdb+set}" = set; then :
-  enableval=$enable_gdb;
-else
-  enable_gdb=yes
-
-fi
-
-
-if test "x$enable_gdb" != xno; then :
-  enable_gdb=--enable-gdb
-
-else
-  enable_gdb=--disable-gdb
-
-fi
-
 
 
 {
@@ -3537,25 +3502,6 @@ fi
 	}
 {
 
-# Check whether --with-glibc-src was given.
-if test "${with_glibc_src+set}" = set; then :
-  withval=$with_glibc_src;
-else
-  with_glibc_src=default
-
-fi
-
-	  if test "x$with_glibc_src" != xdefault; then :
-  with_glibc_src=$with_glibc_src
-
-else
-  with_glibc_src="\$(srcdir)/riscv-glibc"
-
-fi
-
-	}
-{
-
 # Check whether --with-musl-src was given.
 if test "${with_musl_src+set}" = set; then :
   withval=$with_musl_src;
@@ -3569,25 +3515,6 @@ fi
 
 else
   with_musl_src="\$(srcdir)/riscv-musl"
-
-fi
-
-	}
-{
-
-# Check whether --with-gdb-src was given.
-if test "${with_gdb_src+set}" = set; then :
-  withval=$with_gdb_src;
-else
-  with_gdb_src=default
-
-fi
-
-	  if test "x$with_gdb_src" != xdefault; then :
-  with_gdb_src=$with_gdb_src
-
-else
-  with_gdb_src="\$(srcdir)/riscv-gdb"
 
 fi
 

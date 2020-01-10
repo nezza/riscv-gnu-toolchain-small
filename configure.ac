@@ -51,10 +51,10 @@ AS_IF([test "x$enable_linux" != xno],
 	[AC_SUBST(default_target, newlib)])
 
 AC_ARG_WITH(arch,
-	[AS_HELP_STRING([--with-arch=rv64imafdc],
-		[Sets the base RISC-V ISA, defaults to rv64imafdc])],
+	[AS_HELP_STRING([--with-arch=rv32i],
+		[Sets the base RISC-V ISA, defaults to rv32i])],
 	[],
-	[with_arch=rv64imafdc]
+	[with_arch=rv32i]
 	)
 
 AC_ARG_WITH(abi,
@@ -97,10 +97,6 @@ AC_ARG_ENABLE(multilib,
 AS_IF([test "x$enable_multilib" != xno],
         [AC_SUBST(multilib_flags,--enable-multilib)],
 	[AC_SUBST(multilib_flags,--disable-multilib)])
-
-AS_IF([test "x$enable_multilib" != xno],
-        [AC_SUBST(glibc_multilib_names,"rv32imac-ilp32 rv32imafdc-ilp32d rv64imac-lp64 rv64imafdc-lp64d")],
-        [AC_SUBST(glibc_multilib_names,"$with_arch-$with_abi")])
 
 AS_IF([test "x$enable_multilib" != xno],
         [AC_SUBST(newlib_multilib_names,"rv32i-ilp32 rv32iac-ilp32 rv32im-ilp32 rv32imac-ilp32 rv32imafc-ilp32f rv64imac-lp64 rv64imafdc-lp64d")],
@@ -178,17 +174,6 @@ AS_IF([test "x$with_guile" != xdefault],
 	[AC_SUBST(with_guile,--with-guile=$with_guile)],
 	[AC_SUBST(with_guile,"")])
 
-AC_ARG_ENABLE(gdb,
-	[AS_HELP_STRING([--disable-gdb],
-		[Don't build GDB, as it's not upstream])],
-	[],
-	[enable_gdb=yes]
-	)
-
-AS_IF([test "x$enable_gdb" != xno],
-	[AC_SUBST(enable_gdb, --enable-gdb)],
-	[AC_SUBST(enable_gdb, --disable-gdb)])
-
 AC_DEFUN([AX_ARG_WITH_SRC],
 	[{m4_pushdef([opt_name], with_$1_src)
 	  AC_ARG_WITH($1-src,
@@ -206,9 +191,7 @@ AC_DEFUN([AX_ARG_WITH_SRC],
 AX_ARG_WITH_SRC(gcc)
 AX_ARG_WITH_SRC(binutils)
 AX_ARG_WITH_SRC(newlib)
-AX_ARG_WITH_SRC(glibc)
 AX_ARG_WITH_SRC(musl)
-AX_ARG_WITH_SRC(gdb)
 
 AC_ARG_WITH(linux-headers-src,
 	[AC_HELP_STRING([--with-linux-headers-src],
