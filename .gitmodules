@@ -6,19 +6,11 @@
 	path = riscv-gcc
 	url = ../riscv-gcc.git
 	shallow = true
-[submodule "riscv-glibc"]
-	path = riscv-glibc
-	url = ../riscv-glibc.git
-	shallow = true
-[submodule "riscv-dejagnu"]
-	path = riscv-dejagnu
-	url = ../riscv-dejagnu.git
-	shallow = true
+# [submodule "riscv-glibc"]
+# 	path = riscv-glibc
+# 	url = ../riscv-glibc.git
+# 	shallow = true
 [submodule "riscv-newlib"]
 	path = riscv-newlib
 	url = ../riscv-newlib.git
-	shallow = true
-[submodule "riscv-gdb"]
-	path = riscv-gdb
-	url = ../riscv-binutils-gdb.git
 	shallow = true
